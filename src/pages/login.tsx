@@ -1,8 +1,10 @@
-import { useEffect, useRef } from "react";
-import { useLogin } from "@pankod/refine-core";
-import { Container, Box } from "@pankod/refine-mui";
+import { useEffect, useRef } from 'react';
+import { useLogin } from '@pankod/refine-core';
+import { Container, Box } from '@pankod/refine-mui';
 
-import { CredentialResponse } from "../interfaces/google";
+import { yariga } from '../assets';
+
+import { CredentialResponse } from '../interfaces/google';
 
 export const Login: React.FC = () => {
   const { mutate: login } = useLogin<CredentialResponse>();
@@ -11,14 +13,16 @@ export const Login: React.FC = () => {
     const divRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-      if (typeof window === "undefined" || !window.google || !divRef.current) {
+      if (typeof window === 'undefined' || !window.google || !divRef.current) {
         return;
       }
 
       try {
+        const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID || 'client-id';
+
         window.google.accounts.id.initialize({
-          ux_mode: "popup",
-          client_id: "your-client-id",
+          ux_mode: 'popup',
+          client_id: googleClientId,
           callback: async (res: CredentialResponse) => {
             if (res.credential) {
               login(res);
@@ -26,9 +30,9 @@ export const Login: React.FC = () => {
           },
         });
         window.google.accounts.id.renderButton(divRef.current, {
-          theme: "filled_blue",
-          size: "medium",
-          type: "standard",
+          theme: 'filled_blue',
+          size: 'medium',
+          type: 'standard',
         });
       } catch (error) {
         console.log(error);
@@ -39,33 +43,27 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <Box
-      component="div"
-      sx={{
-        background: `radial-gradient(50% 50% at 50% 50%, #63386A 0%, #310438 100%)`,
-        backgroundSize: "cover",
-      }}
-    >
+    <Box component="div" sx={{ background: '#FCFCFC' }}>
       <Container
         component="main"
         maxWidth="xs"
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          height: "100vh",
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          height: '100vh',
         }}
       >
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
           <div>
-            <img src="./refine.svg" alt="Refine Logo" />
+            <img src={yariga} alt="Yariga Logo" />
           </div>
           <Box mt={4}>
             <GoogleButton />
