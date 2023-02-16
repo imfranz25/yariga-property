@@ -1,9 +1,5 @@
-import React, { useContext } from "react";
-import {
-  useGetIdentity,
-  useGetLocale,
-  useSetLocale,
-} from "@pankod/refine-core";
+import React, { useContext } from 'react';
+import { useGetIdentity, useGetLocale, useSetLocale } from '@pankod/refine-core';
 import {
   AppBar,
   IconButton,
@@ -14,11 +10,11 @@ import {
   Select,
   Toolbar,
   Typography,
-} from "@pankod/refine-mui";
-import { DarkModeOutlined, LightModeOutlined } from "@mui/icons-material";
+} from '@pankod/refine-mui';
+import { DarkModeOutlined, LightModeOutlined } from '@mui/icons-material';
 
-import { ColorModeContext } from "contexts";
-import i18n from "i18n";
+import { ColorModeContext } from 'contexts';
+import i18n from 'i18n';
 
 export const Header: React.FC = () => {
   const { mode, setMode } = useContext(ColorModeContext);
@@ -31,26 +27,21 @@ export const Header: React.FC = () => {
   const showUserInfo = user && (user.name || user.avatar);
 
   return (
-    <AppBar color="default" position="sticky" elevation={1}>
+    <AppBar color="default" position="sticky" elevation={0} sx={{ background: '#FCFCFC' }}>
       <Toolbar>
-        <Stack
-          direction="row"
-          width="100%"
-          justifyContent="flex-end"
-          alignItems="center"
-        >
-          <IconButton
+        <Stack direction="row" width="100%" justifyContent="flex-end" alignItems="center">
+          {/* <IconButton
             onClick={() => {
               setMode();
             }}
           >
-            {mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
-          </IconButton>
+            {mode === 'dark' ? <LightModeOutlined /> : <DarkModeOutlined />}
+          </IconButton> */}
           <FormControl sx={{ m: 1, minWidth: 120 }}>
             <Select
               disableUnderline
               defaultValue={currentLocale}
-              inputProps={{ "aria-label": "Without label" }}
+              inputProps={{ 'aria-label': 'Without label' }}
               variant="standard"
             >
               {[...(i18n.languages ?? [])].sort().map((lang: string) => (
@@ -63,20 +54,16 @@ export const Header: React.FC = () => {
                   }}
                   value={lang}
                 >
-                  <Stack
-                    direction="row"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
+                  <Stack direction="row" alignItems="center" justifyContent="center">
                     <Avatar
                       sx={{
-                        width: "16px",
-                        height: "16px",
-                        marginRight: "5px",
+                        width: '16px',
+                        height: '16px',
+                        marginRight: '5px',
                       }}
                       src={`/images/flags/${lang}.svg`}
                     />
-                    {lang === "en" ? "English" : "German"}
+                    {lang === 'en' ? 'English' : 'German'}
                   </Stack>
                 </MenuItem>
               ))}
@@ -85,9 +72,7 @@ export const Header: React.FC = () => {
           {showUserInfo && (
             <Stack direction="row" gap="16px" alignItems="center">
               {user.avatar && <Avatar src={user?.avatar} alt={user?.name} />}
-              {user.name && (
-                <Typography variant="subtitle2">{user?.name}</Typography>
-              )}
+              {user.name && <Typography variant="subtitle2">{user?.name}</Typography>}
             </Stack>
           )}
         </Stack>
