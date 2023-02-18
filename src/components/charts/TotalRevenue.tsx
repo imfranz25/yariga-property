@@ -38,7 +38,7 @@ function TotalRevenue() {
         series={TotalRevenueSeries}
         options={TotalRevenueOptions}
         type="bar"
-        heigth={310}
+        height={310}
       />
     </Box>
   );
