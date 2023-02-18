@@ -36,7 +36,7 @@ function Home() {
           series={[75, 25]}
           colors={['#452be8', '#e4efef']}
         />
-        <Stack mt="25px" width="100%" direction={{ sm: 'column', lg: 'row' }}>
+        <Stack mt="25px" width="100%" direction={{ sm: 'column', lg: 'row' }} gap={4}>
           <TotalRevenue />
           <PropertyReferrals />
         </Stack>
