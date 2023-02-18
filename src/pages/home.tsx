@@ -36,6 +36,10 @@ function Home() {
           series={[75, 25]}
           colors={['#452be8', '#e4efef']}
         />
+        <Stack mt="25px" width="100%" direction={{ sm: 'column', lg: 'row' }}>
+          <TotalRevenue />
+          <PropertyReferrals />
+        </Stack>
       </Box>
     </Box>
   );
