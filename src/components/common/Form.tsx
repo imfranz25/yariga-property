@@ -1,6 +1,17 @@
 import React from 'react';
 
-function Form() {
+import { FormProps } from 'interfaces/common';
+
+function Form({
+  type,
+  register,
+  onFinish,
+  formLoading,
+  handleSubmit,
+  handleImageChange,
+  onFinishHandler,
+  propertyImage,
+}: FormProps) {
   return <div>Form</div>;
 }
 

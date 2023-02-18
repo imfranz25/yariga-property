@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { FormEventHandler } from 'react';
 import { CreateResponse, UpdateResponse, BaseRecord } from '@pankod/refine-core/dist/interfaces';
-import { FieldValues } from '@pankod/refine-react-hook-form';
+import { FieldValues, UseFormHandleSubmit } from '@pankod/refine-react-hook-form';
 
 export interface CustomButtonProps {
   type?: string;
@@ -39,7 +39,7 @@ export interface FormProps {
     values: FieldValues
   ) => Promise<void | CreateResponse<BaseRecord> | UpdateResponse<BaseRecord>>;
   formLoading: boolean;
-  handleSubmit: FormEventHandler<HTMLFormElement> | undefined;
+  handleSubmit: UseFormHandleSubmit<FieldValues> | undefined;
   handleImageChange: (file: File) => void;
   onFinishHandler: (data: FieldValues) => Promise<void> | void;
   propertyImage: { name: string; url: string };
