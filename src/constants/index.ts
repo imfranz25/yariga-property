@@ -25,3 +25,34 @@ export const propertyReferralsInfo = [
     color: '#F45252',
   },
 ];
+
+export const propertyTypes = [
+  {
+    label: 'Apartment',
+    value: 'apartment',
+  },
+  {
+    label: 'Villa',
+    value: 'villa',
+  },
+  {
+    label: 'Farmhouse',
+    value: 'farmhouse',
+  },
+  {
+    label: 'Condos',
+    value: 'condos',
+  },
+  {
+    label: 'Townhouse',
+    value: 'townhouse',
+  },
+  {
+    label: 'Duplex',
+    value: 'duplex',
+  },
+  {
+    label: 'Studio',
+    value: 'studio',
+  },
+];
