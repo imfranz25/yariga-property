@@ -59,17 +59,35 @@ function App() {
   const { t, i18n } = useTranslation();
 
   const authProvider: AuthProvider = {
-    login: ({ credential }: CredentialResponse) => {
+    login: async ({ credential }: CredentialResponse) => {
       const profileObj = credential ? parseJwt(credential) : null;
+      const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080/api/v1';
 
       if (profileObj) {
-        localStorage.setItem(
-          'user',
-          JSON.stringify({
-            ...profileObj,
+        const response = await fetch(`${BACKEND_URL}/users`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: profileObj.name,
+            email: profileObj.email,
             avatar: profileObj.picture,
-          })
-        );
+          }),
+        });
+
+        if (response.status === 200) {
+          const data = await response.json();
+
+          localStorage.setItem(
+            'user',
+            JSON.stringify({
+              ...profileObj,
+              avatar: profileObj.picture,
+              userId: data._id,
+            })
+          );
+        } else {
+          return Promise.reject();
+        }
       }
 
       localStorage.setItem('token', `${credential}`);
