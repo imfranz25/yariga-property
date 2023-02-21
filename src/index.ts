@@ -6,6 +6,10 @@ import * as dotenv from 'dotenv';
 import serverConfig from './server.config.js';
 import connectDB from './helpers/connectDB.js';
 
+/* Routers */
+import userRouter from './routes/user.routes.js';
+import propertyRouter from './routes/property.routes.js';
+
 /* Initialization */
 const app = express();
 
@@ -14,14 +18,17 @@ dotenv.config();
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 
+/* Welcome route */
 app.get('/', (req: Request, res: Response) => {
   res.send({ message: 'Welcome to Yariga' });
 });
 
+app.use('/api/v1/users', userRouter);
+app.use('/api/v1/properties', propertyRouter);
+
 const startServer = async () => {
   try {
-    // Connect to Database
-    await connectDB(serverConfig.MONGODB_URI);
+    connectDB(serverConfig.MONGODB_URI);
 
     app.listen(serverConfig.PORT, () => {
       console.log('Server Running @ http://localhost:8080');
