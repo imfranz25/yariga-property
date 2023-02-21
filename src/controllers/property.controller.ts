@@ -14,7 +14,7 @@ const deleteProperty = (req: Request, res: Response) => {
   console.log('This is a createProperty endpoint');
 };
 
-const getAllproperty = (req: Request, res: Response) => {
+const getAllProperties = (req: Request, res: Response) => {
   console.log('This is a getAllproperty endpoint');
 };
 
@@ -22,4 +22,4 @@ const getPropertyDetails = (req: Request, res: Response) => {
   console.log('This is a getPropertyDetails endpoint');
 };
 
-export { createProperty, getAllproperty, getPropertyDetails, updateProperty, deleteProperty };
+export { createProperty, getAllProperties, getPropertyDetails, updateProperty, deleteProperty };
