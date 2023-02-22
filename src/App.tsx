@@ -62,7 +62,7 @@ function App() {
     login: async ({ credential }: CredentialResponse) => {
       const profileObj = credential ? parseJwt(credential) : null;
       const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080/api/v1';
-
+      console.log(BACKEND_URL);
       if (profileObj) {
         const response = await fetch(`${BACKEND_URL}/users`, {
           method: 'POST',
@@ -73,6 +73,8 @@ function App() {
             avatar: profileObj.picture,
           }),
         });
+
+        console.log(response.status);
 
         if (response.status === 200) {
           const data = await response.json();
