@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import errorType from '../errors/errorType.js';
+import isError from '../helpers/isError.js';
 import User from '../models/user.js';
 
 const createUser = async (req: Request, res: Response) => {
@@ -14,8 +16,11 @@ const createUser = async (req: Request, res: Response) => {
       return res.status(201).json({ newUser, message: 'User Created' });
     }
   } catch (error) {
+    if (isError(error)) {
+      errorType.SERVER_ERROR(error.message as string);
+    }
+
     console.log(error);
-    res.status(500).json({ message: error });
   }
 };
 
