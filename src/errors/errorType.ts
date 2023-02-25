@@ -27,8 +27,13 @@ const USER_NOT_FOUND = (description: string) => {
   });
 };
 
-module.exports = {
-  UNAUTHORIZED,
-  FORBIDDEN,
-  USER_NOT_FOUND,
+const SERVER_ERROR = (description: string) => {
+  return new HttpError({
+    status: 500,
+    message: 'Server Error',
+    code: 'user-004',
+    description,
+  });
 };
+
+export default { UNAUTHORIZED, FORBIDDEN, USER_NOT_FOUND, SERVER_ERROR };
