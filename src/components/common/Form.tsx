@@ -142,8 +142,7 @@ function Form({
               <Typography color="#11142d" fontSize={16} fontWeight={500} my="10px">
                 Property Photo
               </Typography>
-              <Button>
-                Upload *
+              <Button component="label">
                 <input
                   hidden
                   accept="image/*"
@@ -153,19 +152,20 @@ function Form({
                     handleImageChange(e.target.files[0]);
                   }}
                 />
+                Upload *
               </Button>
             </Stack>
             <Typography fontSize={14} color="#808191" sx={{ wordBreak: 'break-all' }}>
               {propertyImage?.name}
             </Typography>
           </Stack>
+          <CustomButton
+            type="submit"
+            title={formLoading ? 'Submitting...' : 'Submit'}
+            backgroundColor="#475be8"
+            color="#FCFCFC"
+          />
         </form>
-        <CustomButton
-          type="submit"
-          title={formLoading ? 'Submitting...' : 'Submit'}
-          backgroundColor="#475be8"
-          color="#FCFCFC"
-        />
       </Box>
     </Box>
   );
