@@ -17,7 +17,7 @@ function AllProperties() {
         </Typography>
         <CustomButton
           title="Add Property"
-          handleClick={() => navigate('/property/create')}
+          handleClick={() => navigate('/properties/create')}
           backgroundColor="#475be8"
           color="#FCFCFC"
           icon={<Add />}
