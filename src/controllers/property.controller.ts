@@ -43,10 +43,11 @@ const createProperty = async (req: Request, res: Response) => {
 
     res.status(201).json({ message: 'Property Created Successfully' });
   } catch (error) {
+    console.log(error);
+
     if (isError(error)) {
       errorType.SERVER_ERROR(error.message);
     }
-    console.log(error);
   }
 };
 
@@ -58,8 +59,18 @@ const deleteProperty = (req: Request, res: Response) => {
   console.log('This is a createProperty endpoint');
 };
 
-const getAllProperties = (req: Request, res: Response) => {
-  console.log('This is a getAllproperty endpoint');
+const getAllProperties = async (req: Request, res: Response) => {
+  try {
+    const properties = await Property.find({}).limit(parseInt(req.query._end as string));
+
+    res.status(200).json(properties);
+  } catch (error) {
+    console.log(error);
+
+    if (isError(error)) {
+      errorType.SERVER_ERROR(error.message);
+    }
+  }
 };
 
 const getPropertyDetails = (req: Request, res: Response) => {
