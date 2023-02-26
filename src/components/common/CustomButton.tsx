@@ -8,11 +8,13 @@ function CustomButton({
   color,
   fullWidth,
   icon,
-  disabled,
   handleClick,
+  disabled = false,
 }: CustomButtonProps) {
   return (
     <Button
+      type={type === 'submit' ? 'submit' : 'button'}
+      disabled={disabled}
       sx={{
         flex: fullWidth ? 1 : 'unset',
         width: fullWidth ? '100%' : 'content-fit',
