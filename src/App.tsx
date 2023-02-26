@@ -141,13 +141,15 @@ function App() {
       <GlobalStyles styles={{ html: { WebkitFontSmoothing: 'auto' } }} />
       <RefineSnackbarProvider>
         <Refine
-          dataProvider={dataProvider('https://api.fake-rest.refine.dev')}
+          dataProvider={dataProvider(
+            process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080/api/v1'
+          )}
           notificationProvider={notificationProvider}
           ReadyPage={ReadyPage}
           catchAll={<ErrorComponent />}
           resources={[
             {
-              name: 'property',
+              name: 'properties',
               list: AllProperties,
               show: PropertyDetails,
               create: CreateProperty,
