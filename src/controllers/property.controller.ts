@@ -6,6 +6,7 @@ import errorType from '../errors/errorType.js';
 import isError from '../helpers/isError.js';
 import * as dotenv from 'dotenv';
 import { v2 as cloudinary } from 'cloudinary';
+import { propertyQuery, OneOrNegativeOne } from '../interfaces/property.interface.js';
 
 /* Initialization */
 dotenv.config();
@@ -61,7 +62,25 @@ const deleteProperty = (req: Request, res: Response) => {
 
 const getAllProperties = async (req: Request, res: Response) => {
   try {
-    const properties = await Property.find({}).limit(parseInt(req.query._end as string));
+    const query: propertyQuery = {};
+    const { _end, _order, _start, _sort, title_like = '', propertyType = '' } = req.query;
+
+    if (propertyType) {
+      query.propertyType = propertyType as string;
+    }
+
+    if (title_like) {
+      query.title = { $regex: title_like, $options: 'i' };
+    }
+
+    const propertyCount = await Property.countDocuments({ query });
+    const properties: object = await Property.find({})
+      .limit(parseInt(_end as string))
+      .skip(parseInt(_start as string))
+      .sort({ [_sort as string]: parseInt(_order as string) as OneOrNegativeOne });
+
+    res.header('x-total-count', propertyCount.toString());
+    res.header('Access-Control-Expose-Headers', 'x-total-count');
 
     res.status(200).json(properties);
   } catch (error) {
