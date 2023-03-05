@@ -13,7 +13,7 @@ function PropertyCard({ id, title, photo, location, price }: PropertyCardProps) 
     <Card
       elevation={0}
       sx={{
-        maxWidth: '327px',
+        maxWidth: '320px',
         padding: '10px',
         cursor: 'pointer',
         '&:hover': { boxShadow: '0 22px 45px 2px rgba(176, 176, 176, 0.1)' },
