@@ -4,3 +4,4 @@ export interface propertyQuery {
 }
 
 export type OneOrNegativeOne = 1 | -1;
+export type AscOrDesc = 'asc' | 'desc';
