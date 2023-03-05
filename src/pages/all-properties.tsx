@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Add } from '@mui/icons-material';
 import { useTable } from '@pankod/refine-core';
 import { Box, MenuItem, Select, Stack, TextField, Typography } from '@pankod/refine-mui';
@@ -20,8 +21,24 @@ function AllProperties() {
     setFilters,
   } = useTable();
   const allProperties = data?.data ?? [];
-  console.log(allProperties);
+  const currentPrice = sorter.find((item) => item.field === 'price')?.order;
+
+  const toggleSort = (field: string) => {
+    setSorter([{ field, order: currentPrice === 'asc' ? 'desc' : 'asc' }]);
+  };
+
+  const currentFilterValues = useMemo(() => {
+    const logicalFilters = filters.flatMap((item) => ('field' in item ? item : []));
+
+    return {
+      title: logicalFilters.find((item) => item.field === 'title')?.value || '',
+    };
+  }, [filters]);
+
+  /* Loading Screen */
   if (isLoading) return <Typography>Loading...</Typography>;
+
+  /* Error data fetched */
   if (isError) return <Typography>Error!</Typography>;
 
   return (
@@ -41,8 +58,8 @@ function AllProperties() {
           >
             <Box display="flex" gap={2} flexWrap="wrap" mb={{ xs: '20px', sm: 0 }}>
               <CustomButton
-                title="Sort price"
-                handleClick={() => {}}
+                title={`Sort price ${currentPrice === 'asc' ? '↑' : '↓'}`}
+                handleClick={() => toggleSort('price')}
                 backgroundColor="#475be8"
                 color="#FCFCFC"
               />
@@ -50,8 +67,16 @@ function AllProperties() {
                 variant="outlined"
                 color="info"
                 placeholder="Search by title"
-                value=""
-                onChange={() => {}}
+                value={currentFilterValues.title}
+                onChange={(e) => {
+                  setFilters([
+                    {
+                      field: 'title',
+                      operator: 'contains',
+                      value: e.currentTarget.value ? e.currentTarget.value : undefined,
+                    },
+                  ]);
+                }}
               />
               <Select
                 variant="outlined"
@@ -90,7 +115,7 @@ function AllProperties() {
           />
         ))}
       </Box>
-      {allProperties.length && (
+      {allProperties.length > 0 && (
         <Box display="flex" gap={2} mt={3} flexWrap="wrap">
           <CustomButton
             title="Previous"
@@ -114,12 +139,12 @@ function AllProperties() {
             color="info"
             required
             displayEmpty
-            defaultValue={10}
+            defaultValue="10"
             inputProps={{ 'aria-label': 'Without Label' }}
             onChange={() => {}}
           >
             {[10, 20, 30, 40, 50].map((size) => (
-              <MenuItem key={size} value="">
+              <MenuItem key={size} value={size}>
                 {size}
               </MenuItem>
             ))}
