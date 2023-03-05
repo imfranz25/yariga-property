@@ -6,7 +6,7 @@ import errorType from '../errors/errorType.js';
 import isError from '../helpers/isError.js';
 import * as dotenv from 'dotenv';
 import { v2 as cloudinary } from 'cloudinary';
-import { propertyQuery, OneOrNegativeOne } from '../interfaces/property.interface.js';
+import { propertyQuery, OneOrNegativeOne, AscOrDesc } from '../interfaces/property.interface.js';
 
 /* Initialization */
 dotenv.config();
@@ -77,7 +77,7 @@ const getAllProperties = async (req: Request, res: Response) => {
     const properties: object = await Property.find({})
       .limit(parseInt(_end as string))
       .skip(parseInt(_start as string))
-      .sort({ [_sort as string]: parseInt(_order as string) as OneOrNegativeOne });
+      .sort({ [_sort as string]: _order as OneOrNegativeOne | AscOrDesc });
 
     res.header('x-total-count', propertyCount.toString());
     res.header('Access-Control-Expose-Headers', 'x-total-count');
