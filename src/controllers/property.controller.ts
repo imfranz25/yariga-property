@@ -53,11 +53,39 @@ const createProperty = async (req: Request, res: Response) => {
 };
 
 const updateProperty = (req: Request, res: Response) => {
-  console.log('This is a createProperty endpoint');
+  console.log('This is a updateProperty endpoint');
 };
 
-const deleteProperty = (req: Request, res: Response) => {
-  console.log('This is a createProperty endpoint');
+const deleteProperty = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const propertyToDelete = await Property.findById(id).populate('creator');
+
+    if (!propertyToDelete) {
+      return errorType.PROPERTY_NOT_FOUND(`Property doesn't exist`);
+    }
+
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    propertyToDelete.remove({ session });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    propertyToDelete.creator?.allProperties.pull(propertyToDelete);
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    await propertyToDelete.creator?.save({ session });
+    await session.commitTransaction();
+
+    res.status(200).json({ message: 'Property Deleted Successfully' });
+  } catch (error) {
+    console.log(error);
+
+    if (isError(error)) {
+      errorType.SERVER_ERROR(error.message);
+    }
+  }
 };
 
 const getAllProperties = async (req: Request, res: Response) => {
@@ -92,8 +120,23 @@ const getAllProperties = async (req: Request, res: Response) => {
   }
 };
 
-const getPropertyDetails = (req: Request, res: Response) => {
-  console.log('This is a getPropertyDetails endpoint');
+const getPropertyDetails = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const isPropertyExist = await Property.findOne({ _id: id }).populate('creator');
+
+    if (!isPropertyExist) {
+      return errorType.PROPERTY_NOT_FOUND(`Property doesn't exist`);
+    }
+
+    res.status(200).json(isPropertyExist);
+  } catch (error) {
+    console.log(error);
+
+    if (isError(error)) {
+      errorType.SERVER_ERROR(error.message);
+    }
+  }
 };
 
 export { createProperty, getAllProperties, getPropertyDetails, updateProperty, deleteProperty };
