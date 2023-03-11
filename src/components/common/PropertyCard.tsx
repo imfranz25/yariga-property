@@ -6,7 +6,7 @@ function PropertyCard({ id, title, photo, location, price }: PropertyCardProps) 
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/properties/${id}`);
+    navigate(`/properties/show/${id}`);
   };
 
   return (
