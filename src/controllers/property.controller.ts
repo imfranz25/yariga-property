@@ -52,8 +52,32 @@ const createProperty = async (req: Request, res: Response) => {
   }
 };
 
-const updateProperty = (req: Request, res: Response) => {
-  console.log('This is a updateProperty endpoint');
+const updateProperty = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { title, description, propertyType, location, price, photo } = req.body;
+    const photoUrl = await cloudinary.uploader.upload(photo);
+
+    await Property.findByIdAndUpdate(
+      { _id: id },
+      {
+        title,
+        description,
+        propertyType,
+        location,
+        price,
+        photo: photoUrl.url || photo,
+      }
+    );
+
+    res.status(200).json({ message: 'Property updated successfully' });
+  } catch (error) {
+    console.log(error);
+
+    if (isError(error)) {
+      errorType.SERVER_ERROR(error.message);
+    }
+  }
 };
 
 const deleteProperty = async (req: Request, res: Response) => {
