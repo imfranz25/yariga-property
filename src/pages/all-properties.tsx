@@ -3,6 +3,7 @@ import { Add } from '@mui/icons-material';
 import { useTable } from '@pankod/refine-core';
 import { Box, MenuItem, Select, Stack, TextField, Typography } from '@pankod/refine-mui';
 import { useNavigate } from '@pankod/refine-react-router-v6';
+import { propertyTypeNames } from '../constants';
 
 /* Components */
 import { PropertyCard, CustomButton } from 'components';
@@ -32,6 +33,7 @@ function AllProperties() {
 
     return {
       title: logicalFilters.find((item) => item.field === 'title')?.value || '',
+      propertyType: logicalFilters.find((item) => item.field === 'propertyType')?.value || '',
     };
   }, [filters]);
 
@@ -84,11 +86,27 @@ function AllProperties() {
                 required
                 displayEmpty
                 defaultValue=""
-                value=""
                 inputProps={{ 'aria-label': 'Without Label' }}
-                onChange={() => {}}
+                value={currentFilterValues.propertyType}
+                onChange={(e) => {
+                  setFilters(
+                    [
+                      {
+                        field: 'propertyType',
+                        operator: 'eq',
+                        value: e.target.value ? e.target.value : undefined,
+                      },
+                    ],
+                    'replace'
+                  );
+                }}
               >
                 <MenuItem value="">All</MenuItem>
+                {propertyTypeNames.map((typeName, index) => (
+                  <MenuItem key={index} value={typeName.toLowerCase()}>
+                    {typeName}
+                  </MenuItem>
+                ))}
               </Select>
             </Box>
           </Box>
@@ -141,7 +159,7 @@ function AllProperties() {
             displayEmpty
             defaultValue="10"
             inputProps={{ 'aria-label': 'Without Label' }}
-            onChange={() => {}}
+            onChange={(e) => setPageSize(e.target.value ? Number(e.target.value) : 10)}
           >
             {[10, 20, 30, 40, 50].map((size) => (
               <MenuItem key={size} value={size}>
