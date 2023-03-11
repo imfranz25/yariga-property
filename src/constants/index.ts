@@ -56,3 +56,14 @@ export const propertyTypes = [
     value: 'studio',
   },
 ];
+
+export const propertyTypeNames = [
+  'Apartment',
+  'Villa',
+  'Farmhouse',
+  'Condos',
+  'Townhouse',
+  'Duplex',
+  'Studio',
+  'Chalet',
+];
