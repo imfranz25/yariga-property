@@ -36,4 +36,13 @@ const SERVER_ERROR = (description: string) => {
   });
 };
 
-export default { UNAUTHORIZED, FORBIDDEN, USER_NOT_FOUND, SERVER_ERROR };
+const PROPERTY_NOT_FOUND = (description: string) => {
+  return new HttpError({
+    status: 404,
+    message: 'Property not found',
+    code: 'property-001',
+    description,
+  });
+};
+
+export default { UNAUTHORIZED, FORBIDDEN, USER_NOT_FOUND, SERVER_ERROR, PROPERTY_NOT_FOUND };
