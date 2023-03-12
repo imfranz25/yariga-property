@@ -38,8 +38,23 @@ const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
-const getUserById = (req: Request, res: Response) => {
-  res.status(200).json({ message: 'This is a getUserById endpoint' });
+const getUserById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const userDetails = await User.findOne({ email: id }).populate('allProperties');
+
+    if (!userDetails) {
+      return errorType.USER_NOT_FOUND('User not found');
+    }
+
+    res.status(200).json(userDetails);
+  } catch (error) {
+    if (isError(error)) {
+      errorType.SERVER_ERROR(error.message as string);
+    }
+
+    console.log(error);
+  }
 };
 
 export { createUser, getAllUsers, getUserById };
