@@ -1,4 +1,4 @@
-import { useGetIdentity, useOne } from '@pankod/refine-core';
+import { useOne } from '@pankod/refine-core';
 import { useParams } from '@pankod/refine-react-router-v6';
 import { Typography } from '@pankod/refine-mui';
 import { Profile } from 'components';
