@@ -24,8 +24,18 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
-const getAllUsers = (req: Request, res: Response) => {
-  res.status(200).json({ message: 'This is a get all users endpoint' });
+const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const allUsers = await User.find({}).limit(parseInt(req.query?._end as string) as number);
+
+    res.status(200).json(allUsers);
+  } catch (error) {
+    if (isError(error)) {
+      errorType.SERVER_ERROR(error.message as string);
+    }
+
+    console.log(error);
+  }
 };
 
 const getUserById = (req: Request, res: Response) => {
