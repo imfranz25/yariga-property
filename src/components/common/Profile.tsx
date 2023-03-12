@@ -11,7 +11,6 @@ function checkImage(url: any) {
 }
 
 const Profile = ({ type, name, avatar, email, properties = [] }: ProfileProps) => {
-  console.log(avatar);
   return (
     <Box>
       <Typography fontSize={25} fontWeight={700} color="#11142D">
@@ -59,7 +58,7 @@ const Profile = ({ type, name, avatar, email, properties = [] }: ProfileProps) =
                     {name}
                   </Typography>
                   <Typography fontSize={16} color="#808191">
-                    Realestate Agent
+                    Real Estate Agent
                   </Typography>
                 </Stack>
 

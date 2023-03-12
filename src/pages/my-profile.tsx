@@ -4,20 +4,18 @@ import { Profile } from 'components';
 
 function MyProfile() {
   const { data: user } = useGetIdentity();
-  console.log(user);
   const { data, isLoading, isError } = useOne({
     resource: 'users',
-    id: user?.email,
+    id: user?.userId,
   });
   const myProfile = data?.data ?? [];
-  console.log(myProfile);
 
   if (isLoading) return <Typography>Loading...</Typography>;
   if (isError) return <Typography>Error</Typography>;
 
   return (
     <Profile
-      type="my"
+      type="My"
       name={myProfile.name}
       email={myProfile.email}
       avatar={myProfile.avatar}
