@@ -5,16 +5,18 @@ import User from '../models/user.js';
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const { email, name, avatar } = req.body;
-    const userData = await User.findOne({ email });
+    const { name, email, avatar } = req.body;
+    const userExists = await User.findOne({ email });
 
-    if (userData) {
-      return res.status(200).json({ message: 'User Login Success', ...userData });
-    } else {
-      const newUser = await User.create({ name, email, avatar });
+    if (userExists) return res.status(200).json(userExists);
 
-      return res.status(201).json({ newUser, message: 'User Created' });
-    }
+    const newUser = await User.create({
+      name,
+      email,
+      avatar,
+    });
+
+    res.status(201).json(newUser);
   } catch (error) {
     if (isError(error)) {
       errorType.SERVER_ERROR(error.message as string);
@@ -41,7 +43,7 @@ const getAllUsers = async (req: Request, res: Response) => {
 const getUserById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const userDetails = await User.findOne({ email: id }).populate('allProperties');
+    const userDetails = await User.findOne({ _id: id }).populate('allProperties');
 
     if (!userDetails) {
       return errorType.USER_NOT_FOUND('User not found');
