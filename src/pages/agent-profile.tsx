@@ -9,7 +9,7 @@ function AgentProfile() {
     resource: 'users',
     id: id as string,
   });
-  const myProfile = data?.data ?? [];
+  const myProfile = data?.data;
 
   if (isLoading) return <Typography>Loading...</Typography>;
   if (isError) return <Typography>Error</Typography>;
@@ -17,10 +17,10 @@ function AgentProfile() {
   return (
     <Profile
       type="Agent"
-      name={myProfile.name}
-      email={myProfile.email}
-      avatar={myProfile.avatar}
-      properties={myProfile.allProperties}
+      name={myProfile?.name}
+      email={myProfile?.email}
+      avatar={myProfile?.avatar}
+      properties={myProfile?.allProperties}
     />
   );
 }
