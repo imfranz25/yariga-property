@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./dist/",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q ./dist/index.js\"",
     "start": "node ./dist/",
     "build": "tsc"
   },
@@ -27,6 +27,7 @@
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "@typescript-eslint/parser": "^5.52.0",
     "commitizen": "^4.3.0",
+    "concurrently": "^8.2.1",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.34.0"
   },
